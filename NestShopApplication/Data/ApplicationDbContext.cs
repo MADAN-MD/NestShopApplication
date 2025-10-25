@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NestShopApplication.Models;
 
@@ -54,6 +55,12 @@ namespace NestShopApplication.Data
                 }
 
                 );
+
+            modelBuilder.Entity<IdentityRole>().HasData(
+               new IdentityRole { Name ="admin", NormalizedName = "admin" },
+               new IdentityRole { Name ="client", NormalizedName ="client" },
+               new IdentityRole {Name = "seller", NormalizedName="seller" }
+               );
 
         }
     }

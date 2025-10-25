@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NestShopApplication.Models;
 using NestShopApplication.Repository.IRepository;
+using NestShopApplication.Utility;
 
 namespace NestShopApplication.Controllers
 {
@@ -23,6 +25,7 @@ namespace NestShopApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = StaticDetails.Role_Admin)]
         public IActionResult Create(Category model)
         {
             try
@@ -75,6 +78,7 @@ namespace NestShopApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = StaticDetails.Role_Admin)]
         public IActionResult Edit(Category model)
         {
             try
@@ -106,6 +110,8 @@ namespace NestShopApplication.Controllers
 
         }
 
+
+        [Authorize(Roles = StaticDetails.Role_Admin)]
         public IActionResult Delete(int? id)
         {
             try

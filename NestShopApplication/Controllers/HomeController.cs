@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NestShopApplication.Models;
 using NestShopApplication.Repository.IRepository;
+using NestShopApplication.ViewModels;
 using System.Diagnostics;
 
 namespace NestShopApplication.Controllers
@@ -32,9 +34,34 @@ namespace NestShopApplication.Controllers
             return View(product);
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult CreateBanner(int? id)
         {
-            return View();
+            IEnumerable<SelectListItem> categoryList = _unitOfWork.Category
+                .GetAll()
+                .Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString(),
+                });
+
+            //ViewBag.CategoryList = categoryList;
+            ProductViewModel viewModel = new ProductViewModel()
+            {
+                CategoryList = categoryList,
+                Product = new Product()
+            };
+
+            if (id == null || id == 0)
+            {
+                return View(viewModel);
+            }
+            else
+            {
+                //update
+                viewModel.Product = _unitOfWork.Product.Get(x => x.Id == id);
+                return View(viewModel);
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NestShopApplication.Models;
 using NestShopApplication.Repository.IRepository;
+using NestShopApplication.Utility;
 using NestShopApplication.ViewModels;
 
 namespace NestShopApplication.Controllers
@@ -54,6 +56,7 @@ namespace NestShopApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin,seller")]
         public IActionResult Upsert(ProductViewModel model, IFormFile? file)
         {
             try
@@ -121,6 +124,8 @@ namespace NestShopApplication.Controllers
             }
         }
 
+
+        [Authorize(Roles = StaticDetails.Role_Admin)]
         public IActionResult Delete(int? id)
         {
             try
