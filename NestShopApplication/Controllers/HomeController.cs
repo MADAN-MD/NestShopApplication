@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Tokens;
 using NestShopApplication.Models;
 using NestShopApplication.Repository.IRepository;
 using NestShopApplication.ViewModels;
@@ -22,6 +24,9 @@ namespace NestShopApplication.Controllers
 
         public IActionResult Index()
         {
+            var banner = _unitOfWork.Banner.GetAll().OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+            ViewBag.Banner_image = banner != null ? banner.ImageUrl : null;
+
             var products = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
 
             return View(products);
@@ -34,33 +39,61 @@ namespace NestShopApplication.Controllers
             return View(product);
         }
 
-        [HttpGet]
-        public IActionResult CreateBanner(int? id)
+        public IActionResult Create()
         {
-            IEnumerable<SelectListItem> categoryList = _unitOfWork.Category
-                .GetAll()
-                .Select(c => new SelectListItem
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin,seller")]
+        public IActionResult Create(Banner model, IFormFile? file)
+        {
+            try
+            {
+                var createdDate = DateTime.Now;
+                model.CreatedDate = createdDate;
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
                 {
-                    Text = c.Name,
-                    Value = c.Id.ToString(),
-                });
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"images\banners");
 
-            //ViewBag.CategoryList = categoryList;
-            ProductViewModel viewModel = new ProductViewModel()
-            {
-                CategoryList = categoryList,
-                Product = new Product()
-            };
+                    if (!string.IsNullOrEmpty(model.ImageUrl))
+                    {
+                        //delete old image
+                        var oldImagePath = Path.Combine(wwwRootPath, model.ImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
 
-            if (id == null || id == 0)
-            {
-                return View(viewModel);
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    model.ImageUrl = @"\images\banners\" + fileName;
+                }
+
+                if (model.Id == 0)
+                {
+                    _unitOfWork.Banner.Add(model);
+
+                }
+                else
+                {
+                    _unitOfWork.Banner.Update(model);
+                }
+                _unitOfWork.Save();
+
+                TempData["success"] = "Banner successfully Created.";
+                return RedirectToAction("Index");
             }
-            else
+            catch (Exception ex)
             {
-                //update
-                viewModel.Product = _unitOfWork.Product.Get(x => x.Id == id);
-                return View(viewModel);
+
+                throw ex;
             }
         }
 

@@ -17,6 +17,7 @@ namespace NestShopApplication.Models
 
         [Display(Name = "Product Description")]
         public string Description { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         [ValidateNever]
         public string ImageUrl { get; set; }

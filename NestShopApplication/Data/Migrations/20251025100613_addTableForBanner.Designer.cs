@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NestShopApplication.Data;
 
@@ -11,9 +12,11 @@ using NestShopApplication.Data;
 namespace NestShopApplication.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251025100613_addTableForBanner")]
+    partial class addTableForBanner
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,19 +54,19 @@ namespace NestShopApplication.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "19d6bab1-7cb0-457d-86bd-05c32c3d5ac9",
+                            Id = "db5ea678-a34e-4261-b2fc-efaef64f7fa9",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "74246b8c-d09c-4524-bb91-3be76ed9941d",
+                            Id = "bcc2c7d4-b8f4-43dc-b5f1-2ce5d059edea",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "149b7764-6fee-473f-a6eb-146ade7465f6",
+                            Id = "e184cac9-7f53-498d-ac7d-b1b7d8582e5a",
                             Name = "seller",
                             NormalizedName = "seller"
                         });
@@ -247,9 +250,6 @@ namespace NestShopApplication.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()

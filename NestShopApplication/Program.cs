@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NestShopApplication.Data;
 using NestShopApplication.Repository;
 using NestShopApplication.Repository.IRepository;
+using NestShopApplication.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,7 @@ builder.Services.AddRazorPages();
 //    .AddEntityFrameworkStores<ApplicationDbContext>(); 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 
 var app = builder.Build();

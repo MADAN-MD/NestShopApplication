@@ -4,6 +4,8 @@
     {
         ICategoryRepository Category { get; }
         IProductRepository Product { get; }
+        IBannerRepository Banner { get; }
+
         void Save();
     }
 }

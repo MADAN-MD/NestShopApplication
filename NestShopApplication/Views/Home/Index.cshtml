@@ -13,18 +13,9 @@
         </div>
         <div class="carousel-inner">
 
-            @foreach (var item in Model)
-            {
-                <div class="carousel-item active">
-                    <img src="@item.ImageUrl" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item active">
-                    <img src="@item.ImageUrl" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item active">
-                    <img src="@item.ImageUrl" class="d-block w-100" alt="...">
-                </div>
-            }
+            <div class="carousel-item active">
+                <img src="@ViewBag.Banner_image" class="d-block w-100" alt="...">
+            </div>
            @*  <div class="carousel-item active">
                 <img src="..." class="d-block w-100" alt="...">
             </div>
@@ -35,25 +26,27 @@
                 <img src="..." class="d-block w-100" alt="...">
             </div> *@
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+       @*  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
-        </button>
+        </button> *@
     </div>
-    @foreach (var product in Model)
-    {
-        <div class="col">
-            <div class="card" style="width: 18rem; height:25rem; margin-bottom:2rem;">
-                <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name" style="height:15rem;">
-                <div class="card-body">
-                    <h5 class="card-title">@product.Name</h5>
-                    <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary">Details</a>
+   <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-3 mb-3 m-4">
+                <div class="card" style="width: 18rem; height:25rem; margin-bottom:2rem;">
+                    <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name" style="height:15rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary">Details</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+   </div>
 </div>
