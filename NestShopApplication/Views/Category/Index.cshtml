@@ -1,0 +1,49 @@
+﻿@model List<NestShopApplication.Models.Category>
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<div class="card w-full mb-3 rounded">
+    <h1 class="card-header">Category</h1>
+    <div class="card-body">
+        <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> New
+        </a>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">S.N</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Order</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model)
+                {
+                    <tr>
+                        <th scope="row">@category.Id</th>
+                        <td>@category.Name</td>
+                        <td>@category.DisplayOrder</td>
+                        <td>
+                            <div>
+                                <a asp-controller="Category" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-info">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <a asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+

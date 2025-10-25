@@ -58,6 +58,7 @@ namespace NestShopApplication.Controllers
         {
             try
             {
+
                 if (!ModelState.IsValid)
                 {
                     IEnumerable<SelectListItem> categoryList = _unitOfWork.Category
@@ -118,6 +119,35 @@ namespace NestShopApplication.Controllers
 
                 throw ex;
             }
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            try
+            {
+                if (id == null || id == 0)
+                {
+                    return NotFound();
+                }
+                var entity = _unitOfWork.Product.Get(x => x.Id == id);
+
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+
+                _unitOfWork.Product.Remove(entity);
+                _unitOfWork.Save();
+                TempData["success"] = "Product removed successfully.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
         }
     }
 }
