@@ -42,21 +42,26 @@
                         </div>
 
                         <div class="row">
+
+                            @if (User.IsInRole(StaticDetails.Role_Admin) || User.IsInRole(StaticDetails.Role_Seller))
+                            {
+                                <div class="col-6 col-md-3">
+                                    @if (Model.Product.Id != 0)
+                                    {
+                                        <button type="submit" class="btn btn-primary">Update</button>
+
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-primary">Create</button>
+
+                                    }
+
+                                </div>
+                            }
+                           
                             <div class="col-6 col-md-3">
-                                @if (Model.Product.Id != 0)
-                                {
-                                    <button type="submit" class="btn btn-primary">Update</button>
-
-                                }
-                                else
-                                {
-                                    <button type="submit" class="btn btn-primary">Create</button>
-
-                                }
-
-                            </div>
-                            <div class="col-6 col-md-3">
-                                <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Back To Category</a>
+                                <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Back To Product</a>
 
                             </div>
                         </div>

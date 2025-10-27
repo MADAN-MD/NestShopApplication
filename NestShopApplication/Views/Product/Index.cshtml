@@ -30,9 +30,13 @@
                                 <a asp-controller="Product" asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-info">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-                                <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">
-                                    <i class="bi bi-trash"></i>
-                                </a>
+                                @if (User.IsInRole(StaticDetails.Role_Admin))
+                                {
+                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                }    
+                               
                             </div>
 
                         </td>

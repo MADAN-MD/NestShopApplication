@@ -19,10 +19,14 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-6 col-md-3">
-                        <button type="submit" class="btn btn-primary">Update</button>
+                    @if (User.IsInRole(StaticDetails.Role_Admin))
+                    {
+                        <div class="col-6 col-md-3">
+                            <button type="submit" class="btn btn-primary">Update</button>
 
-                    </div>
+                        </div>
+                    }
+                    
                     <div class="col-6 col-md-3">
                         <a asp-controller="Category" asp-action="Index" class="btn btn-secondary">Back To Category</a>
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - NestShopApplication</title>
+    <title>NestShopApp</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -11,10 +11,14 @@
     <link rel="stylesheet" href="~/NestShopApplication.styles.css" asp-append-version="true" />
 </head>
 <body>
+    <div class="container">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NestShopApplication</a>
+                @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NestShopApplication+</a> *@
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/applogo/Logo_1.jpg" alt="NestShop Logo" style="height:40px;">
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -32,9 +36,8 @@
                                     Content Management
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-controller="Category" asp-action="Index">Category</a>
-                                    </li>
+                                   
+                                    <li><a class="dropdown-item" asp-controller="Category" asp-action="Index">Category</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" asp-controller="Product" asp-action="Index">Products</a></li>
                                     <li><hr class="dropdown-divider"></li>
@@ -59,7 +62,9 @@
                         }
                         else if (User.IsInRole(StaticDetails.Role_Client))
                         {
-                            <li><a class="dropdown-item" asp-controller="Product" asp-action="Index">Products</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">Products</a>
+                                </li>
                         }
                     </ul>
                     <partial name="_LoginPartial" />
@@ -67,7 +72,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    
         <main role="main" class="pb-3">
             <partial name="_Notification" />
             @RenderBody()
@@ -76,7 +81,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - NestShopApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - NestShopApplication 
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
